@@ -1,0 +1,57 @@
+/* Custom CSS for Cafe Billing System */
+body {
+    background-color: #f8f9fa;
+  }
+  
+  h1 {
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  table {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  h4 {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  
+  @media print {
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .container h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    button {
+      display: none; /* Hide buttons in print view */
+    }
+    #search-input, .row .col-md-6 {
+      display: none; /* Hide search bar and buttons in print view */
+    }
+  }
+
