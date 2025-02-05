@@ -8,20 +8,22 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom CSS file (optional) -->
   <link rel="stylesheet" href="style.css">
+  <script src="print.js"></script>
 </head>
 <body>
 
   <div class="container mt-5">
-    <h1 class="text-center">Cafe Billing System</h1>
+    <h1 class="text-center">Ocean Cafe Billing System</h1>
     <div class="row mb-3">
         <div class="col-md-8">
-          <input type="text" id="search-input" class="form-control" placeholder="Search for an item...">
+          <input type="text" id="search-input" class="form-control" placeholder="Search for an item..." oninput="searchItem()">
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <button class="btn btn-secondary w-100" onclick="searchItem()">Search</button>
         </div>
-      </div>
-    
+      </div> -->
+      
+
     <!-- Order Table -->
     <table class="table table-bordered mt-3">
       <thead>
@@ -29,7 +31,7 @@
           <th>Item</th>
           <th>Price (in rs)</th>
           <th>Quantity</th>
-          <th>Total</th>
+          <th>Total(in rs)</th>
         </tr>
       </thead>
       <tbody id="order-table-body">
@@ -92,11 +94,13 @@
     <!-- Calculate Total -->
     <div>
         <div class="row mt-3">
+          <!-- printBill -->
             <div class="col-md-6">
-              <button class="btn btn-primary" onclick="calculateTotal()">Calculate Total</button>
+              <button class="btn btn-success" onclick="printBill()">Print</button>
             </div>
+            <!-- calculate -->
             <div class="col-md-6 text-right">
-              <h4>Total: Rs:<span id="total-amount">0.00</span></h4>
+              <h4 onclick="calculateTotal()">Total: Rs:<span id="total-amount">0.00</span></h4>
             </div>
           </div>
         </div>
@@ -112,58 +116,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Custom JavaScript -->
   <script>
-    
-    // Function to calculate total
-    function calculateTotal() {
-      // Get the quantity and prices of items
-      let coffeeQuantity = document.getElementById('coffee-quantity').value;
-      let teaQuantity = document.getElementById('tea-quantity').value;
-      let sandwichQuantity = document.getElementById('sandwich-quantity').value;
-      let teacakeQuantity = document.getElementById('teacake-quantity').value;
-      let puffsQuantity = document.getElementById('puffs-quantity').value;
-      let pizzaQuantity = document.getElementById('pizza-quantity').value;
-      let bunbutterjamQuantity = document.getElementById('bbj-quantity').value;
-      let chocolatecakeQuantity = document.getElementById('ccake-quantity').value;
-      let applepieQuantity = document.getElementById('applepie-quantity').value;
-
-      // Item prices
-      let coffeePrice = 20;
-      let teaPrice = 10;
-      let sandwichPrice = 30;
-      let teacakePrice = 20;
-      let puffsPrice = 22;
-      let pizzaPrice = 60;
-      let bunbutterjamPrice = 30;
-      let chocolatecakePrice = 45;
-      let applepiePrice = 75;
-
-      // Calculate total for each item
-      let coffeeTotal = coffeeQuantity * coffeePrice;
-      let teaTotal = teaQuantity * teaPrice;
-      let sandwichTotal = sandwichQuantity * sandwichPrice;
-      let teacakeTotal = teacakeQuantity * teacakePrice;
-      let puffsTotal = puffsQuantity * puffsPrice;
-      let pizzaTotal = pizzaQuantity * pizzaPrice;
-      let bunbutterjamTotal = bunbutterjamQuantity * bunbutterjamPrice;
-      let chocolatecakeTotal = chocolatecakeQuantity * chocolatecakePrice;
-      let applepieTotal = applepieQuantity * applepiePrice;
-
-
-      // Update the total for each item in the table
-      document.getElementById('coffee-total').innerText = coffeeTotal.toFixed(2);
-      document.getElementById('tea-total').innerText = teaTotal.toFixed(2);
-      document.getElementById('sandwich-total').innerText = sandwichTotal.toFixed(2);
-      document.getElementById('teacake-total').innerText = teacakeTotal.toFixed(2);
-      document.getElementById('puffs-total').innerText = puffsTotal.toFixed(2);
-      document.getElementById('pizza-total').innerText = pizzaTotal.toFixed(2);
-      document.getElementById('bbj-total').innerText = bunbutterjamTotal.toFixed(2);
-      document.getElementById('ccake-total').innerText = chocolatecakeTotal.toFixed(2);
-      document.getElementById('applepie-total').innerText = applepieTotal.toFixed(2);
-
-      // Calculate the grand total
-      let grandTotal = coffeeTotal + teaTotal + sandwichTotal + teacakeTotal + puffsTotal + pizzaTotal + bunbutterjamTotal + chocolatecakeTotal + applepieTotal;
-      document.getElementById('total-amount').innerText = grandTotal.toFixed(2);
-    }
     function searchItem() {
       let searchInput = document.getElementById('search-input').value.toLowerCase();
       let tableRows = document.querySelectorAll("#order-table-body tr");
@@ -178,19 +130,45 @@
         }
       });
     }
-    // Function to reset all items to 0
+    
+
+function calculateTotal() {
+  let items = [
+    { id: "coffee", price: 20 },
+    { id: "tea", price: 10 },
+    { id: "sandwich", price: 30 },
+    { id: "teacake", price: 20 },
+    { id: "puffs", price: 22 },
+    { id: "pizza", price: 60 },
+    { id: "bbj", price: 30 },
+    { id: "ccake", price: 45 },
+    { id: "applepie", price: 75 }
+  ];
+
+  let grandTotal = 0;
+
+  items.forEach(item => {
+    let quantity = document.getElementById(`${item.id}-quantity`).value;
+    let total = parseFloat(quantity * item.price).toFixed(2);
+    document.getElementById(`${item.id}-total`).innerText = total;
+    grandTotal += parseFloat(total);
+  });
+
+  document.getElementById('total-amount').innerText = grandTotal.toFixed(2);
+}
+
+// Attach event listeners to all input fields to update total dynamically
+document.querySelectorAll('input[type="number"]').forEach(input => {
+  input.addEventListener('input', calculateTotal);
+});
+
+// Function to reset all values
 function cancelOrder() {
-  // Reset all quantity inputs to 0
-  let quantityInputs = document.querySelectorAll('input[type="number"]');
-  quantityInputs.forEach(input => input.value = 0);
-
-  // Reset all totals to 0
-  let totalCells = document.querySelectorAll('td[id$="-total"]');
-  totalCells.forEach(cell => cell.innerText = "0.00");
-
-  // Reset the grand total
+  document.querySelectorAll('input[type="number"]').forEach(input => input.value = 0);
+  document.querySelectorAll('td[id$="-total"]').forEach(cell => cell.innerText = "0.00");
   document.getElementById('total-amount').innerText = "0.00";
 }
+
   </script>
 
 </body>
