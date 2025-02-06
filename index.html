@@ -1,175 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cafe Billing System</title>
-  <!-- Link to Bootstrap CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom CSS file (optional) -->
-  <link rel="stylesheet" href="style.css">
-  <script src="print.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Ocean Cafe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Font for Stylish Title -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        /* Full-screen background */
+        body {
+            background-image: url('./loginpagebg.jpg'); /* Change to your image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Dark overlay for readability */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        /* Stylish welcome container */
+        .welcome-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards;
+        }
+
+        /* Animated and Stylish Title */
+        .welcome-title {
+            font-family: 'Great Vibes', "cursive";
+            font-size: 60px;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInMove 2s ease-in-out 0.5s forwards;
+        }
+
+        /* Animated subtitle */
+        .welcome-subtitle {
+            font-size: 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+        }
+
+        /* Enter button */
+        .btn-enter {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1.5s forwards;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Fade-in + Move */
+        @keyframes fadeInMove {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="container mt-5">
-    <h1 class="text-center">Ocean Cafe Billing System</h1>
-    <div class="row mb-3">
-        <div class="col-md-8">
-          <input type="text" id="search-input" class="form-control" placeholder="Search for an item..." oninput="searchItem()">
-        </div>
-        <!-- <div class="col-md-4">
-          <button class="btn btn-secondary w-100" onclick="searchItem()">Search</button>
-        </div>
-      </div> -->
-      
-
-    <!-- Order Table -->
-    <table class="table table-bordered mt-3">
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price (in rs)</th>
-          <th>Quantity</th>
-          <th>Total(in rs)</th>
-        </tr>
-      </thead>
-      <tbody id="order-table-body">
-        <tr>
-          <td>Coffee</td>
-          <td>20</td>
-          <td><input type="number" id="coffee-quantity" class="form-control" value="0" min="0" /></td>
-          <td id="coffee-total">0.00</td>
-        </tr>
-        <tr>
-          <td>Tea</td>
-          <td>10</td>
-          <td><input type="number" id="tea-quantity" class="form-control" value="0" min="0" /></td>
-          <td id="tea-total">0.00</td>
-        </tr>
-        <tr>
-          <td>Sandwich</td>
-          <td>30</td>
-          <td><input type="number" id="sandwich-quantity" class="form-control" value="0" min="0" /></td>
-          <td id="sandwich-total">0.00</td>
-        </tr>
-        <tr>
-            <td>Tea-Cake</td>
-            <td>20</td>
-            <td><input type="number" id="teacake-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="teacake-total">0.00</td>
-          </tr>
-          <tr>
-            <td>Puffs</td>
-            <td>22</td>
-            <td><input type="number" id="puffs-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="puffs-total">0.00</td>
-          </tr>
-          <tr>
-            <td>Pizza</td>
-            <td>60</td>
-            <td><input type="number" id="pizza-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="pizza-total">0.00</td>
-          </tr><tr>
-            <td>Bun butter jam</td>
-            <td>30</td>
-            <td><input type="number" id="bbj-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="bbj-total">0.00</td>
-          </tr>
-          <tr>
-            <td>Chocolate cake</td>
-            <td>45</td>
-            <td><input type="number" id="ccake-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="ccake-total">0.00</td>
-          </tr>
-          <tr>
-            <td>Apple pie</td>
-            <td>75</td>
-            <td><input type="number" id="applepie-quantity" class="form-control" value="0" min="0" /></td>
-            <td id="applepie-total">0.00</td>
-          </tr>
-      </tbody>
-    </table>
-
-    <!-- Calculate Total -->
-    <div>
-        <div class="row mt-3">
-          <!-- printBill -->
-            <div class="col-md-6">
-              <button class="btn btn-success" onclick="printBill()">Print</button>
-            </div>
-            <!-- calculate -->
-            <div class="col-md-6 text-right">
-              <h4 onclick="calculateTotal()">Total: Rs:<span id="total-amount">0.00</span></h4>
-            </div>
-          </div>
-        </div>
-        <!-- Cancel Button -->
-<div class="col-md-4 mt-3">
-    <button class="btn btn-danger" onclick="cancelOrder()">Cancel</button>
-  </div>
-  
+    <div class="welcome-container">
+        <h1 class="welcome-title">Welcome to Ocean Cafe</h1>
+        <p class="welcome-subtitle">E n j o y the best coffee, snacks, and desserts!</p>
+        <button class="btn btn-light btn-enter" onclick="enterCafe()"><b>Enter</b></button>
     </div>
-  
 
-  <!-- Link to Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom JavaScript -->
-  <script>
-    function searchItem() {
-      let searchInput = document.getElementById('search-input').value.toLowerCase();
-      let tableRows = document.querySelectorAll("#order-table-body tr");
-
-      // Loop through all table rows and hide the ones that don't match the search input
-      tableRows.forEach(row => {
-        let itemName = row.cells[0].textContent.toLowerCase();
-        if (itemName.includes(searchInput)) {
-          row.style.display = ''; // Show row if it matches
-        } else {
-          row.style.display = 'none'; // Hide row if it doesn't match
+    <script>
+        function enterCafe() {
+            window.location.href = "login.html"; // Redirect to login page
         }
-      });
-    }
-    
-
-function calculateTotal() {
-  let items = [
-    { id: "coffee", price: 20 },
-    { id: "tea", price: 10 },
-    { id: "sandwich", price: 30 },
-    { id: "teacake", price: 20 },
-    { id: "puffs", price: 22 },
-    { id: "pizza", price: 60 },
-    { id: "bbj", price: 30 },
-    { id: "ccake", price: 45 },
-    { id: "applepie", price: 75 }
-  ];
-
-  let grandTotal = 0;
-
-  items.forEach(item => {
-    let quantity = document.getElementById(`${item.id}-quantity`).value;
-    let total = parseFloat(quantity * item.price).toFixed(2);
-    document.getElementById(`${item.id}-total`).innerText = total;
-    grandTotal += parseFloat(total);
-  });
-
-  document.getElementById('total-amount').innerText = grandTotal.toFixed(2);
-}
-
-// Attach event listeners to all input fields to update total dynamically
-document.querySelectorAll('input[type="number"]').forEach(input => {
-  input.addEventListener('input', calculateTotal);
-});
-
-// Function to reset all values
-function cancelOrder() {
-  document.querySelectorAll('input[type="number"]').forEach(input => input.value = 0);
-  document.querySelectorAll('td[id$="-total"]').forEach(cell => cell.innerText = "0.00");
-  document.getElementById('total-amount').innerText = "0.00";
-}
-
-  </script>
+    </script>
 
 </body>
 </html>
