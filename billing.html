@@ -16,6 +16,7 @@
 
   <div class="container mt-5">
     <h1 class="text-center "><tt><i>Ocean Cafe Billing System</i></tt></h1>
+    
     <div class="row mb-3">
         <div class="col-md-8">
           <input type="text" id="search-input" class="form-control" placeholder="Search for an item..." oninput="searchItem()">
@@ -25,10 +26,7 @@
             <button class="btn btn-danger" onclick="logout()">Logout <i class="bi bi-box-arrow-right"></i></button>
         </div>        
         </div>
-        <!-- <div class="col-md-4">
-          <button class="btn btn-secondary w-100" onclick="searchItem()">Search</button>
-        </div>
-      </div> -->
+       
       
 
     <!-- Order Table -->
@@ -102,11 +100,11 @@
     <div>
         <div class="row mt-3">
           <!-- printBill -->
-            <div class="col-md-6">
+            <div class="col-md-4">
               <button class="btn btn-success" onclick="printBill()">Print</button>
             </div>
             <!-- calculate -->
-            <div class="col-md-6 text-right">
+            <div class="col-md-3 text-end">
               <h4 onclick="calculateTotal()">Total: Rs:<span id="total-amount">0.00</span></h4>
             </div>
           </div>
