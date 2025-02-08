@@ -97,23 +97,19 @@
     </table>
 
     <!-- Calculate Total -->
-    <div>
-        <div class="row mt-3">
+          <!-- calculate -->
+          <div class="col-md-3 text-left">
+            <h4 class="alert alert-light text-dark" onclick="calculateTotal()">Total: Rs:<span id="total-amount">0.00</span></h4>
+          </div>
           <!-- printBill -->
             <div class="col-md-4">
               <button class="btn btn-success" onclick="printBill()">Print</button>
             </div>
-            <!-- calculate -->
-            <div class="col-md-3 text-end">
-              <h4 onclick="calculateTotal()">Total: Rs:<span id="total-amount">0.00</span></h4>
-            </div>
-          </div>
-        </div>
         <!-- Cancel Button -->
-<div class="col-md-4 mt-3">
+<div class="col-md-4 mt-1">
     <button class="btn btn-danger" onclick="cancelOrder()">Cancel</button>
   </div>
-  
+
     </div>
   
 
